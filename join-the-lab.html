@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gourdine Lab Interest Form</title>
+<meta name="description" content="Research interest form for students who would like to join the Gourdine Lab at Lewis & Clark College.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: single reading column; a lab intro header, then form sections set off by hairline rules, and a summary panel that appears on submit. */
+:root{
+  --bg:#f4f7f9;          /* cool off-white, navy bias */
+  --surface:#ffffff;
+  --ink:#13294b;         /* navy */
+  --muted:#52627a;
+  --line:#d4dce6;
+  --accent:#13294b;      /* navy: primary actions */
+  --accent-ink:#ffffff;
+  --straw:#0e7c7f;       /* teal: labels, highlights */
+  --straw-soft:#e2f1f1;
+  --danger:#b3261e;
+  --field:#fbfcfd;
+  --display:"Playfair Display", Georgia, "Times New Roman", serif;
+  --body:"DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0d1626;--surface:#142036;--ink:#e4ebf5;--muted:#9fb0c6;--line:#26344d;--accent:#5cc8c9;--accent-ink:#071a1b;--straw:#5cc8c9;--straw-soft:#12303a;--danger:#f2857c;--field:#0f1a2d;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0d1626;--surface:#142036;--ink:#e4ebf5;--muted:#9fb0c6;--line:#26344d;--accent:#5cc8c9;--accent-ink:#071a1b;--straw:#5cc8c9;--straw-soft:#12303a;--danger:#f2857c;--field:#0f1a2d;color-scheme:dark}
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55;padding-inline:16px;padding-block:32px 64px}
+.wrap{max-width:720px;margin:0 auto;display:grid;gap:28px}
+h1,h2{font-family:var(--display);font-weight:600;text-wrap:balance;margin:0;line-height:1.15}
+h1{font-size:clamp(2rem,5vw,2.6rem)}
+h2{font-size:1.35rem}
+p{margin:0}
+.eyebrow{font-family:var(--mono);font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--straw)}
+header{display:grid;gap:14px}
+.startnote{display:flex;flex-wrap:wrap;gap:10px;align-items:baseline}
+.startnote strong{font-family:var(--display);font-size:1.15rem}
+header .lede{color:var(--muted);max-width:62ch}
+.glycan{display:block;color:var(--straw)}
+
+.areas{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:4px}
+.area{border-top:2px solid var(--straw);padding-top:8px;min-width:0}
+.area b{display:block;font-weight:600;font-size:.95rem}
+.area span{color:var(--muted);font-size:.875rem}
+
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;list-style:none;margin:0;padding:14px 16px;background:var(--straw-soft);border-radius:8px;counter-reset:s}
+.steps li{counter-increment:s;font-size:.9rem;display:flex;gap:10px;min-width:0}
+.steps li::before{content:counter(s);font-family:var(--mono);font-weight:500;color:var(--straw);flex:none}
+
+form{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 24px 24px}
+@media (max-width:520px){form{padding:4px 16px 20px}}
+fieldset{border:0;margin:0;padding:22px 0;border-bottom:1px solid var(--line);display:grid;gap:16px;min-width:0}
+fieldset:last-of-type{border-bottom:0}
+legend{padding:0;margin-bottom:6px;display:flex;align-items:baseline;gap:10px}
+legend .eyebrow{color:var(--muted)}
+.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.field{display:grid;gap:6px;min-width:0}
+label,.label{font-weight:500;font-size:.925rem}
+.hint{color:var(--muted);font-size:.825rem;font-weight:400}
+.req{color:var(--straw);font-weight:600}
+input[type=text],input[type=email],input[type=url],select,textarea{
+  width:100%;font:inherit;font-size:.95rem;color:var(--ink);background:var(--field);
+  border:1px solid var(--line);border-radius:6px;padding:9px 11px}
+textarea{min-height:120px;resize:vertical}
+input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible,a:focus-visible,.check input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.checks{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px 16px}
+.check{display:flex;gap:9px;align-items:flex-start;font-size:.925rem;font-weight:400;cursor:pointer}
+.check input{margin-top:4px;accent-color:var(--accent);flex:none}
+.check small{display:block;color:var(--muted);font-size:.8rem}
+.counter{font-family:var(--mono);font-size:.75rem;color:var(--muted);font-variant-numeric:tabular-nums;justify-self:end}
+.counter.low{color:var(--straw)}
+.error{color:var(--danger);font-size:.825rem}
+.invalid input,.invalid select,.invalid textarea{border-color:var(--danger)}
+
+.actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding-top:20px}
+button{font:inherit;font-weight:600;font-size:.95rem;border-radius:6px;padding:10px 18px;cursor:pointer;border:1px solid transparent}
+.primary{background:var(--accent);color:var(--accent-ink)}
+.ghost{background:transparent;color:var(--muted);border-color:var(--line)}
+.saved{font-size:.8rem;color:var(--muted)}
+
+#summary{background:var(--surface);border:1px solid var(--accent);border-radius:10px;padding:24px;display:grid;gap:16px}
+#summary pre{margin:0;font-family:var(--mono);font-size:.8rem;line-height:1.5;white-space:pre-wrap;word-break:break-word;background:var(--field);border:1px solid var(--line);border-radius:6px;padding:14px;max-height:360px;overflow:auto}
+.addr{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center}
+.addr code{font-family:var(--mono);font-size:.95rem;user-select:all;background:var(--straw-soft);padding:3px 8px;border-radius:4px;word-break:break-all}
+.small{font-size:.85rem;color:var(--muted)}
+a{color:var(--accent)}
+footer{color:var(--muted);font-size:.8rem}
+@media (prefers-reduced-motion:no-preference){#summary{animation:in .25s ease-out}@keyframes in{from{transform:translateY(6px)}to{transform:none}}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <svg class="glycan" width="132" height="28" viewBox="0 0 132 28" aria-hidden="true">
+      <g fill="none" stroke="currentColor" stroke-width="1.6">
+        <polygon points="14,4 24,9 24,19 14,24 4,19 4,9"/>
+        <polygon points="58,4 68,9 68,19 58,24 48,19 48,9"/>
+        <polygon points="102,4 112,9 112,19 102,24 92,19 92,9"/>
+        <line x1="24" y1="14" x2="48" y2="14"/><line x1="68" y1="14" x2="92" y2="14"/>
+      </g>
+      <circle cx="122" cy="14" r="4" fill="var(--ink)"/>
+    </svg>
+    <p class="eyebrow">Lewis &amp; Clark College · Research opportunities</p>
+    <h1>Join the Gourdine Lab</h1>
+    <p class="lede">We study the urinary microbiome (the urobiome) and the carbohydrate-active enzymes (CAZymes) its bacteria use, combining biochemistry, glycoscience and bioinformatics. If you would like to do research with us, tell us about yourself below. No prior research experience is needed.</p>
+    <p class="startnote"><span class="eyebrow">Next start date</span> <strong>September 2027</strong></p>
+    <div class="areas" aria-label="Research areas">
+      <div class="area"><b>Urobiome biology</b><span>Bladder-associated bacteria across OAB, UTI and bladder cancer cohorts</span></div>
+      <div class="area"><b>Bioinformatics</b><span>Genome annotation of glycoside hydrolase and polysaccharide lyase families</span></div>
+      <div class="area"><b>Glycoscience</b><span>Oligosaccharide analysis and carbohydrate biochemistry</span></div>
+    </div>
+  </header>
+
+  <ol class="steps" aria-label="How to apply">
+    <li>Fill in the form. Your draft is kept in this browser as you type.</li>
+    <li>Select “Prepare my application” to check your answers.</li>
+    <li>Copy the result and email it to the address shown.</li>
+  </ol>
+
+  <form id="f" novalidate>
+    <fieldset>
+      <legend><span class="eyebrow">Part 1</span><h2>About you</h2></legend>
+      <div class="row">
+        <div class="field"><label for="name">Full name <span class="req">*</span></label><input id="name" name="name" type="text" autocomplete="name" required></div>
+        <div class="field"><label for="pronouns">Pronouns <span class="hint">(optional)</span></label><input id="pronouns" name="pronouns" type="text"></div>
+      </div>
+      <div class="row">
+        <div class="field"><label for="email">Email <span class="req">*</span></label><input id="email" name="email" type="email" autocomplete="email" required></div>
+        <div class="field"><label for="status">Current status <span class="req">*</span></label>
+          <select id="status" name="status" required>
+            <option value="">Choose one</option>
+            <option>L&amp;C first-year</option><option>L&amp;C sophomore</option><option>L&amp;C junior</option><option>L&amp;C senior</option>
+            <option>Undergraduate at another institution</option><option>Post-baccalaureate</option><option>Graduate student</option><option>Other</option>
+          </select></div>
+      </div>
+      <div class="field" id="instWrap" hidden><label for="institution">Institution <span class="req">*</span></label><input id="institution" name="institution" type="text" autocomplete="organization"></div>
+      <div class="row">
+        <div class="field"><label for="major">Major(s) / field of study <span class="req">*</span></label><input id="major" name="major" type="text" required placeholder="e.g. Biochemistry & Molecular Biology"></div>
+        <div class="field"><label for="grad">Expected graduation <span class="req">*</span></label><input id="grad" name="grad" type="text" required placeholder="e.g. May 2028"></div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend><span class="eyebrow">Part 2</span><h2>Research interests</h2></legend>
+      <div class="field">
+        <span class="label" id="areasLbl">Which areas interest you? <span class="req">*</span> <span class="hint">Choose any.</span></span>
+        <div class="checks" role="group" aria-labelledby="areasLbl" id="areasGroup">
+          <label class="check"><input type="checkbox" name="areas" value="Urobiome microbiology" id="a1"><span>Urobiome microbiology<small>Culturing and characterizing bladder bacteria</small></span></label>
+          <label class="check"><input type="checkbox" name="areas" value="Bioinformatics & comparative genomics" id="a2"><span>Bioinformatics &amp; genomics<small>CAZyme annotation, dbCAN, R or Python</small></span></label>
+          <label class="check"><input type="checkbox" name="areas" value="Glycoscience & mass spectrometry" id="a3"><span>Glycoscience &amp; mass spec<small>Oligosaccharide structure and analysis</small></span></label>
+          <label class="check"><input type="checkbox" name="areas" value="Enzyme biochemistry" id="a4"><span>Enzyme biochemistry<small>Carbohydrate-active enzymes at the bench</small></span></label>
+          <label class="check"><input type="checkbox" name="areas" value="Open to any project" id="a5"><span>Open to any project<small>Happy to learn where help is needed</small></span></label>
+        </div>
+      </div>
+      <div class="field">
+        <label for="why">Why do you want to join this lab, and what questions interest you? <span class="req">*</span></label>
+        <span class="hint">About 150–300 words. Curiosity matters more than polish.</span>
+        <textarea id="why" name="why" required rows="7"></textarea>
+        <span class="counter" id="whyCount" aria-live="polite">0 words</span>
+      </div>
+      <div class="field">
+        <label for="experience">Previous research or lab experience <span class="hint">(optional)</span></label>
+        <textarea id="experience" name="experience" rows="4" placeholder="Course labs, internships, independent projects, coding work… “None yet” is a fine answer."></textarea>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend><span class="eyebrow">Part 3</span><h2>Coursework &amp; skills</h2></legend>
+      <div class="field">
+        <span class="label" id="courseLbl">Courses completed or in progress</span>
+        <div class="checks" role="group" aria-labelledby="courseLbl">
+          <label class="check"><input type="checkbox" name="courses" value="General Chemistry" id="c1"><span>General Chemistry</span></label>
+          <label class="check"><input type="checkbox" name="courses" value="Organic Chemistry" id="c2"><span>Organic Chemistry</span></label>
+          <label class="check"><input type="checkbox" name="courses" value="Biochemistry" id="c3"><span>Biochemistry</span></label>
+          <label class="check"><input type="checkbox" name="courses" value="Microbiology" id="c4"><span>Microbiology</span></label>
+          <label class="check"><input type="checkbox" name="courses" value="Molecular / Cell Biology" id="c5"><span>Molecular / Cell Biology</span></label>
+          <label class="check"><input type="checkbox" name="courses" value="Genetics / Genomics" id="c6"><span>Genetics / Genomics</span></label>
+          <label class="check"><input type="checkbox" name="courses" value="Statistics" id="c7"><span>Statistics</span></label>
+          <label class="check"><input type="checkbox" name="courses" value="Programming (R, Python, etc.)" id="c8"><span>Programming (R, Python…)</span></label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="field"><label for="bench">Wet-lab comfort</label>
+          <select id="bench" name="bench"><option value="">Choose one</option><option>New to lab work</option><option>Course labs only</option><option>Some independent lab work</option><option>Experienced</option></select></div>
+        <div class="field"><label for="code">Computational comfort</label>
+          <select id="code" name="code"><option value="">Choose one</option><option>No coding yet</option><option>Some coding (a class or tutorial)</option><option>Comfortable with R, Python or the command line</option><option>Experienced</option></select></div>
+      </div>
+      <div class="field"><label for="techniques">Techniques or tools you have used <span class="hint">(optional)</span></label><input id="techniques" name="techniques" type="text" placeholder="e.g. PCR, sterile technique, gel electrophoresis, RStudio, Excel"></div>
+    </fieldset>
+
+    <fieldset>
+      <legend><span class="eyebrow">Part 4</span><h2>Availability</h2></legend>
+      <div class="field">
+        <span class="label" id="typeLbl">What kind of position are you looking for? <span class="req">*</span></span>
+        <div class="checks" role="group" aria-labelledby="typeLbl" id="typeGroup">
+          <label class="check"><input type="checkbox" name="type" value="Academic-year research for course credit" id="t1"><span>Academic year, for credit</span></label>
+          <label class="check"><input type="checkbox" name="type" value="Volunteer" id="t2"><span>Volunteer</span></label>
+          <label class="check"><input type="checkbox" name="type" value="Summer research" id="t3"><span>Summer research</span></label>
+          <label class="check"><input type="checkbox" name="type" value="Senior thesis / capstone" id="t4"><span>Senior thesis / capstone</span></label>
+          <label class="check"><input type="checkbox" name="type" value="Paid position, if available" id="t5"><span>Paid position, if available</span></label>
+          <label class="check"><input type="checkbox" name="type" value="Visiting / external internship" id="t6"><span>Visiting / external internship</span></label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="field"><label for="start">Earliest start <span class="req">*</span> <span class="hint">New positions begin September 2027.</span></label>
+          <select id="start" name="start" required><option value="">Choose one</option><option>September 2027</option><option>January 2028</option><option>Summer 2028</option><option>Flexible (September 2027 or later)</option></select></div>
+        <div class="field"><label for="hours">Hours per week during the semester</label>
+          <select id="hours" name="hours"><option value="">Choose one</option><option>Under 5</option><option>5–8</option><option>8–12</option><option>12+</option><option>Summer only</option></select></div>
+      </div>
+      <div class="field"><label for="funding">Funding or fellowship you have or plan to apply for <span class="hint">(optional)</span></label><input id="funding" name="funding" type="text" placeholder="e.g. work-study eligible, applying to an REU, home-institution fellowship"></div>
+    </fieldset>
+
+    <fieldset>
+      <legend><span class="eyebrow">Part 5</span><h2>Anything else</h2></legend>
+      <div class="row">
+        <div class="field"><label for="ref">Faculty reference <span class="hint">(optional)</span></label><input id="ref" name="ref" type="text" placeholder="Name and email"></div>
+        <div class="field"><label for="link">CV, GitHub or portfolio link <span class="hint">(optional)</span></label><input id="link" name="link" type="url" placeholder="https://"></div>
+      </div>
+      <div class="field"><label for="other">Questions or other information <span class="hint">(optional)</span></label><textarea id="other" name="other" rows="3"></textarea></div>
+      <div class="actions">
+        <button type="submit" class="primary" id="go">Prepare my application</button>
+        <button type="button" class="ghost" id="clear">Clear form</button>
+        <span class="saved" id="saved" aria-live="polite"></span>
+      </div>
+      <p class="error" id="formErr" hidden>Some required answers are missing. They are marked in red above.</p>
+    </fieldset>
+  </form>
+
+  <section id="summary" hidden aria-labelledby="sumH">
+    <p class="eyebrow">Last step</p>
+    <h2 id="sumH">Copy your application and email it</h2>
+    <p>Copy the text below and send it in an email to:</p>
+    <div class="addr"><code id="addr"></code><button type="button" class="ghost" id="copyAddr">Copy address</button></div>
+    <p class="small">Use the subject line <code id="subj" style="font-family:var(--mono)"></code>. If your device supports it, <a id="mailto" href="#">open it in your email app</a> with everything filled in, then check that the message is complete before sending.</p>
+    <pre id="out" tabindex="0"></pre>
+    <div class="actions" style="padding-top:0">
+      <button type="button" class="primary" id="copy">Copy application</button>
+      <button type="button" class="ghost" id="edit">Edit answers</button>
+      <span class="saved" id="copied" aria-live="polite"></span>
+    </div>
+  </section>
+
+  <footer>Applications are read on a rolling basis. You will hear back by email.</footer>
+</div>
+
+<script>
+(function(){
+  var LAB_EMAIL = "lc21-1397@lclark.edu";
+  var KEY = "gourdine-lab-interest-draft";
+  var f = document.getElementById("f");
+  var $ = function(id){return document.getElementById(id)};
+  $("addr").textContent = LAB_EMAIL;
+
+  var status = $("status"), instWrap = $("instWrap"), inst = $("institution");
+  function syncInst(){
+    var v = status.value;
+    var external = v && v.indexOf("L&C") !== 0;
+    instWrap.hidden = !external;
+    inst.required = !!external;
+  }
+  status.addEventListener("change", syncInst);
+
+  function words(s){ s = s.trim(); return s ? s.split(/\s+/).length : 0; }
+  function syncCount(){
+    var n = words($("why").value);
+    var c = $("whyCount");
+    c.textContent = n + (n === 1 ? " word" : " words");
+    c.classList.toggle("low", n > 0 && n < 150);
+  }
+  $("why").addEventListener("input", syncCount);
+
+  function checked(name){
+    return Array.prototype.filter.call(f.querySelectorAll('input[name="'+name+'"]'), function(i){return i.checked}).map(function(i){return i.value});
+  }
+
+  // Draft persistence (per-browser convenience only)
+  function save(){
+    var d = {};
+    Array.prototype.forEach.call(f.elements, function(el){
+      if(!el.id) return;
+      if(el.type === "checkbox") d[el.id] = el.checked;
+      else if(el.tagName !== "BUTTON") d[el.id] = el.value;
+    });
+    try{ localStorage.setItem(KEY, JSON.stringify(d)); $("saved").textContent = "Draft saved in this browser"; }catch(e){}
+  }
+  function load(){
+    var d; try{ d = JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){ d = null; }
+    if(!d) return;
+    Object.keys(d).forEach(function(id){
+      var el = $(id); if(!el) return;
+      if(el.type === "checkbox") el.checked = !!d[id]; else el.value = d[id];
+    });
+  }
+  var t; f.addEventListener("input", function(){ clearTimeout(t); t = setTimeout(save, 600); });
+  f.addEventListener("change", function(){ clearTimeout(t); t = setTimeout(save, 300); });
+
+  $("clear").addEventListener("click", function(){
+    if($("clear").dataset.armed){
+      f.reset(); try{ localStorage.removeItem(KEY); }catch(e){}
+      delete $("clear").dataset.armed; $("clear").textContent = "Clear form";
+      $("saved").textContent = "Form cleared"; syncInst(); syncCount(); clearErrors(); $("summary").hidden = true;
+    } else {
+      $("clear").dataset.armed = "1"; $("clear").textContent = "Select again to clear everything";
+      setTimeout(function(){ delete $("clear").dataset.armed; $("clear").textContent = "Clear form"; }, 4000);
+    }
+  });
+
+  function clearErrors(){
+    Array.prototype.forEach.call(f.querySelectorAll(".invalid"), function(x){x.classList.remove("invalid")});
+    Array.prototype.forEach.call(f.querySelectorAll(".error.inline"), function(x){x.remove()});
+    $("formErr").hidden = true;
+  }
+  function flag(container, msg){
+    container.classList.add("invalid");
+    var p = document.createElement("p"); p.className = "error inline"; p.textContent = msg; container.appendChild(p);
+  }
+
+  function validate(){
+    clearErrors();
+    var first = null;
+    var reqIds = ["name","email","status","major","grad","why","start"];
+    if(inst.required) reqIds.push("institution");
+    reqIds.forEach(function(id){
+      var el = $(id), wrap = el.closest(".field");
+      var bad = !el.value.trim() || (el.type === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value.trim()));
+      if(bad){ flag(wrap, el.type === "email" && el.value.trim() ? "Enter a valid email address." : "This answer is required."); first = first || el; }
+    });
+    if(!checked("areas").length){ flag($("areasGroup").closest(".field"), "Choose at least one area."); first = first || $("a1"); }
+    if(!checked("type").length){ flag($("typeGroup").closest(".field"), "Choose at least one option."); first = first || $("t1"); }
+    if(first){ $("formErr").hidden = false; first.focus(); }
+    return !first;
+  }
+
+  function v(id){ return $(id).value.trim(); }
+  function build(){
+    var L = [];
+    function line(k, val){ if(val) L.push(k + ": " + val); }
+    L.push("GOURDINE LAB — RESEARCH INTEREST FORM", "");
+    L.push("ABOUT ME");
+    line("Name", v("name")); line("Pronouns", v("pronouns")); line("Email", v("email"));
+    line("Status", v("status")); line("Institution", inst.required ? v("institution") : "Lewis & Clark College");
+    line("Major(s)", v("major")); line("Expected graduation", v("grad"));
+    L.push("", "RESEARCH INTERESTS");
+    line("Areas", checked("areas").join("; "));
+    L.push("", "Why this lab:", v("why"));
+    if(v("experience")) L.push("", "Previous experience:", v("experience"));
+    L.push("", "COURSEWORK & SKILLS");
+    line("Courses", checked("courses").join("; ") || "None listed");
+    line("Wet-lab comfort", v("bench")); line("Computational comfort", v("code")); line("Techniques/tools", v("techniques"));
+    L.push("", "AVAILABILITY");
+    line("Position type", checked("type").join("; ")); line("Earliest start", v("start")); line("Hours/week", v("hours")); line("Funding", v("funding"));
+    if(v("ref") || v("link") || v("other")){
+      L.push("", "OTHER");
+      line("Faculty reference", v("ref")); line("Link", v("link"));
+      if(v("other")) L.push("Questions/notes:", v("other"));
+    }
+    return L.join("\n");
+  }
+
+  f.addEventListener("submit", function(e){
+    e.preventDefault();
+    if(!validate()) return;
+    save();
+    var text = build();
+    var subject = "Lab interest: " + v("name") + " (" + v("start") + ")";
+    $("out").textContent = text;
+    $("subj").textContent = subject;
+    $("mailto").href = "mailto:" + LAB_EMAIL + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(text);
+    $("copied").textContent = "";
+    $("summary").hidden = false;
+    $("summary").scrollIntoView({behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block:"start"});
+    $("sumH").setAttribute("tabindex","-1"); $("sumH").focus({preventScroll:true});
+  });
+
+  function copyText(text, statusEl, okMsg, selectEl){
+    var fallback = function(){
+      if(selectEl){ var r = document.createRange(); r.selectNodeContents(selectEl); var s = getSelection(); s.removeAllRanges(); s.addRange(r); }
+      statusEl.textContent = "Text selected. Press Ctrl+C or ⌘C to copy.";
+    };
+    try{
+      navigator.clipboard.writeText(text).then(function(){ statusEl.textContent = okMsg; }, fallback);
+    }catch(e){ fallback(); }
+  }
+  $("copy").addEventListener("click", function(){ copyText($("out").textContent, $("copied"), "Copied. Paste it into an email to the address above.", $("out")); });
+  $("copyAddr").addEventListener("click", function(){ copyText(LAB_EMAIL, $("copied"), "Address copied.", $("addr")); });
+  $("edit").addEventListener("click", function(){ $("summary").hidden = true; $("name").focus(); });
+
+  load(); syncInst(); syncCount();
+})();
+</script>
+</body>
+</html>
